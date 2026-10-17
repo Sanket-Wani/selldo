@@ -1,0 +1,222 @@
+{
+  "communities": {
+    "0": [
+      "models",
+      "models_address",
+      "models_billingsubscription",
+      "models_bulkuploadjob",
+      "models_campaigntarget",
+      "models_client",
+      "models_clientconfiguration",
+      "models_clientfeatures",
+      "models_customfielddefinition",
+      "models_customreportdefinition",
+      "models_demographics",
+      "models_dltcompliancedetails",
+      "models_googleconversionapiconfig",
+      "models_metaconversionapiconfig",
+      "models_objectid",
+      "models_projectunit",
+      "models_recipe",
+      "models_requirement",
+      "models_roiconfiguration",
+      "models_team",
+      "models_whatsappflow",
+      "models_whatsappflowscreen",
+      "models_whatsapptemplate"
+    ],
+    "1": [
+      "api",
+      "api_iadnetworkcontroller",
+      "api_iadnetworkcontroller_savegooglecapiconfig",
+      "api_iadnetworkcontroller_savemetacapiconfig",
+      "api_iprojectcontroller",
+      "api_iprojectcontroller_getprojectdetails",
+      "api_iprojectcontroller_getprojects",
+      "api_leadfilterparams",
+      "api_paginatedresponse",
+      "models_followup",
+      "models_project",
+      "models_task"
+    ],
+    "2": [
+      "models_leadstage",
+      "models_user",
+      "workflows",
+      "workflows_leadlifecyclefsm",
+      "workflows_leadlifecyclefsm_cantransition",
+      "workflows_leadlifecyclefsm_transition",
+      "workflows_presaleshandoffservice",
+      "workflows_presaleshandoffservice_pushtosales",
+      "workflows_stagetransitionresult"
+    ],
+    "3": [
+      "api_ileadcontroller",
+      "api_ileadcontroller_changestage",
+      "api_ileadcontroller_createlead",
+      "api_ileadcontroller_getleadbyid",
+      "api_ileadcontroller_getleads",
+      "api_ileadcontroller_reassignlead",
+      "api_ileadcontroller_updatelead",
+      "models_lead"
+    ],
+    "4": [
+      "api_isitevisitcontroller",
+      "api_isitevisitcontroller_conductsitevisit",
+      "api_isitevisitcontroller_getsitevisits",
+      "api_isitevisitcontroller_schedulesitevisit",
+      "models_sitevisit",
+      "workflows_sitevisitworkflow",
+      "workflows_sitevisitworkflow_conductvisit"
+    ],
+    "5": [
+      "api_ireportingcontroller",
+      "api_ireportingcontroller_createcustomreport",
+      "api_ireportingcontroller_executecustomreport",
+      "api_ireportingcontroller_getcampaignroireport",
+      "api_ireportingcontroller_getcustomreports",
+      "api_ireportingcontroller_getleadfunnelreport"
+    ],
+    "6": [
+      "api_ibookingcontroller",
+      "api_ibookingcontroller_cancelbooking",
+      "api_ibookingcontroller_createbooking",
+      "api_ibookingcontroller_getbookings",
+      "models_booking"
+    ],
+    "7": [
+      "api_itargetsandroicontroller",
+      "api_itargetsandroicontroller_createcampaigntarget",
+      "api_itargetsandroicontroller_getcampaigntargets",
+      "api_itargetsandroicontroller_getroiconfigurations",
+      "api_itargetsandroicontroller_saveroiconfiguration"
+    ],
+    "8": [
+      "api_itelephonycontroller",
+      "api_itelephonycontroller_getinboundcalls",
+      "api_itelephonycontroller_savecalldisposition",
+      "api_itelephonycontroller_triggerclicktocall",
+      "models_call"
+    ],
+    "9": [
+      "api_iwhatsappcontroller",
+      "api_iwhatsappcontroller_createtemplate",
+      "api_iwhatsappcontroller_getflows",
+      "api_iwhatsappcontroller_gettemplates",
+      "api_iwhatsappcontroller_saveflow"
+    ],
+    "10": [
+      "api_ibillingcontroller",
+      "api_ibillingcontroller_downloadinvoice",
+      "api_ibillingcontroller_getbillingsummary",
+      "api_ibillingcontroller_getinvoices"
+    ],
+    "11": [
+      "api_ibulkoperationscontroller",
+      "api_ibulkoperationscontroller_getbulkjobs",
+      "api_ibulkoperationscontroller_triggerbulkreassign",
+      "api_ibulkoperationscontroller_uploadbulkleads"
+    ],
+    "12": [
+      "api_iexportcontroller",
+      "api_iexportcontroller_getexporthistory",
+      "api_iexportcontroller_getexporttypes",
+      "api_iexportcontroller_requestdomainexport"
+    ]
+  },
+  "cohesion": {
+    "0": 0.08695652173913043,
+    "1": 0.19696969696969696,
+    "2": 0.4166666666666667,
+    "3": 0.35714285714285715,
+    "4": 0.3333333333333333,
+    "5": 0.3333333333333333,
+    "6": 0.5,
+    "7": 0.4,
+    "8": 0.4,
+    "9": 0.4,
+    "10": 0.5,
+    "11": 0.5,
+    "12": 0.5
+  },
+  "gods": [
+    {
+      "id": "models_lead",
+      "label": "Lead",
+      "degree": 9
+    },
+    {
+      "id": "api_ileadcontroller",
+      "label": "ILeadController",
+      "degree": 7
+    },
+    {
+      "id": "api_ireportingcontroller",
+      "label": "IReportingController",
+      "degree": 6
+    },
+    {
+      "id": "models_leadstage",
+      "label": "LeadStage",
+      "degree": 6
+    },
+    {
+      "id": "models_sitevisit",
+      "label": "SiteVisit",
+      "degree": 6
+    },
+    {
+      "id": "api_iwhatsappcontroller",
+      "label": "IWhatsAppController",
+      "degree": 5
+    },
+    {
+      "id": "api_itargetsandroicontroller",
+      "label": "ITargetsAndRoiController",
+      "degree": 5
+    },
+    {
+      "id": "models_booking",
+      "label": "Booking",
+      "degree": 5
+    },
+    {
+      "id": "workflows_leadlifecyclefsm",
+      "label": "LeadLifecycleFSM",
+      "degree": 4
+    },
+    {
+      "id": "api_itelephonycontroller",
+      "label": "ITelephonyController",
+      "degree": 4
+    }
+  ],
+  "surprises": [
+    {
+      "source": "StageTransitionResult",
+      "target": "LeadStage",
+      "source_files": [
+        "workflows.ts",
+        "models.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "peripheral node `StageTransitionResult` unexpectedly reaches hub `LeadStage`"
+    },
+    {
+      "source": "LeadLifecycleFSM",
+      "target": "LeadStage",
+      "source_files": [
+        "workflows.ts",
+        "models.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "cross-file semantic connection"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

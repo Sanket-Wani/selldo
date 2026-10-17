@@ -1,0 +1,596 @@
+/* ==========================================================================
+   SELL.DO CRM REPLICA — DESIGN SYSTEM STYLESHEET
+   SOURCE OF TRUTH: C:\Users\sanke\Downloads\sell.do\DESIGN-apple.md
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------------
+     1. COLOR TOKENS (Verbatim 18 tokens)
+     ------------------------------------------------------------------------ */
+  --color-primary: #0066cc;
+  --color-primary-focus: #0071e3;
+  --color-primary-on-dark: #2997ff;
+
+  --color-ink: #1d1d1f;
+  --color-body: #1d1d1f;
+  --color-body-on-dark: #ffffff;
+  --color-body-muted: #cccccc;
+  --color-ink-muted-80: #333333;
+  --color-ink-muted-48: #7a7a7a;
+
+  --color-divider-soft: #f0f0f0;
+  --color-hairline: #e0e0e0;
+
+  --color-canvas: #ffffff;
+  --color-canvas-parchment: #f5f5f7;
+  --color-surface-pearl: #fafafc;
+
+  --color-surface-tile-1: #272729;
+  --color-surface-tile-2: #2a2a2c;
+  --color-surface-tile-3: #252527;
+  --color-surface-black: #000000;
+  --color-surface-chip-translucent: rgba(210, 210, 215, 0.64);
+
+  --color-on-primary: #ffffff;
+  --color-on-dark: #ffffff;
+
+  /* ------------------------------------------------------------------------
+     2. SPACING SCALE (8 tokens)
+     ------------------------------------------------------------------------ */
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 17px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  --space-section: 80px;
+
+  /* ------------------------------------------------------------------------
+     3. BORDER RADIUS (7 tokens)
+     ------------------------------------------------------------------------ */
+  --radius-none: 0px;
+  --radius-xs: 5px;
+  --radius-sm: 8px;
+  --radius-md: 11px;
+  --radius-lg: 18px;
+  --radius-pill: 9999px;
+  --radius-full: 9999px;
+
+  /* ------------------------------------------------------------------------
+     4. ELEVATION & DEPTH
+     ------------------------------------------------------------------------ */
+  --border-soft-hairline: 1px solid rgba(0, 0, 0, 0.08);
+  --backdrop-blur: saturate(180%) blur(20px);
+  --product-shadow: 3px 5px 30px 0 rgba(0, 0, 0, 0.22);
+
+  /* ------------------------------------------------------------------------
+     5. FONT FAMILIES (Display >=19px, Body <20px)
+     ------------------------------------------------------------------------ */
+  --font-display: "SF Pro Display", -apple-system, BlinkMacSystemFont, var(--font-inter), system-ui, sans-serif;
+  --font-body: "SF Pro Text", -apple-system, BlinkMacSystemFont, var(--font-inter), system-ui, sans-serif;
+
+  /* ------------------------------------------------------------------------
+     6. TYPOGRAPHY HIERARCHY (16 tokens)
+     ------------------------------------------------------------------------ */
+  --type-hero-display-size: 56px;
+  --type-hero-display-weight: 600;
+  --type-hero-display-lh: 1.07;
+  --type-hero-display-ls: -0.28px;
+
+  --type-display-lg-size: 40px;
+  --type-display-lg-weight: 600;
+  --type-display-lg-lh: 1.1;
+  --type-display-lg-ls: 0;
+
+  --type-display-md-size: 34px;
+  --type-display-md-weight: 600;
+  --type-display-md-lh: 1.47;
+  --type-display-md-ls: -0.374px;
+
+  --type-lead-size: 28px;
+  --type-lead-weight: 400;
+  --type-lead-lh: 1.14;
+  --type-lead-ls: 0.196px;
+
+  --type-lead-airy-size: 24px;
+  --type-lead-airy-weight: 300;
+  --type-lead-airy-lh: 1.5;
+  --type-lead-airy-ls: 0;
+
+  --type-tagline-size: 21px;
+  --type-tagline-weight: 600;
+  --type-tagline-lh: 1.19;
+  --type-tagline-ls: 0.231px;
+
+  --type-body-strong-size: 17px;
+  --type-body-strong-weight: 600;
+  --type-body-strong-lh: 1.24;
+  --type-body-strong-ls: -0.374px;
+
+  --type-body-size: 17px;
+  --type-body-weight: 400;
+  --type-body-lh: 1.44; /* Tuned for Inter fallback per spec */
+  --type-body-ls: -0.374px;
+
+  --type-dense-link-size: 17px;
+  --type-dense-link-weight: 400;
+  --type-dense-link-lh: 2.41;
+  --type-dense-link-ls: 0;
+
+  --type-caption-strong-size: 14px;
+  --type-caption-strong-weight: 600;
+  --type-caption-strong-lh: 1.29;
+  --type-caption-strong-ls: -0.224px;
+
+  --type-caption-size: 14px;
+  --type-caption-weight: 400;
+  --type-caption-lh: 1.43;
+  --type-caption-ls: -0.224px;
+
+  --type-button-large-size: 18px;
+  --type-button-large-weight: 300;
+  --type-button-large-lh: 1.0;
+  --type-button-large-ls: 0;
+
+  --type-button-utility-size: 14px;
+  --type-button-utility-weight: 400;
+  --type-button-utility-lh: 1.29;
+  --type-button-utility-ls: -0.224px;
+
+  --type-fine-print-size: 12px;
+  --type-fine-print-weight: 400;
+  --type-fine-print-lh: 1.0;
+  --type-fine-print-ls: -0.12px;
+
+  --type-micro-legal-size: 10px;
+  --type-micro-legal-weight: 400;
+  --type-micro-legal-lh: 1.3;
+  --type-micro-legal-ls: -0.08px;
+
+  --type-nav-link-size: 12px;
+  --type-nav-link-weight: 400;
+  --type-nav-link-lh: 1.0;
+  --type-nav-link-ls: -0.12px;
+}
+
+/* --------------------------------------------------------------------------
+   BASE CSS RESET & SETUP
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--color-canvas);
+  color: var(--color-body);
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  font-weight: var(--type-body-weight);
+  line-height: var(--type-body-lh);
+  letter-spacing: var(--type-body-ls);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Inter Fallback OpenType Feature */
+.font-inter-tuned {
+  font-feature-settings: "ss03";
+}
+
+/* --------------------------------------------------------------------------
+   TYPOGRAPHY CLASSES
+   -------------------------------------------------------------------------- */
+.type-hero-display {
+  font-family: var(--font-display);
+  font-size: var(--type-hero-display-size);
+  font-weight: var(--type-hero-display-weight);
+  line-height: var(--type-hero-display-lh);
+  letter-spacing: var(--type-hero-display-ls);
+}
+
+.type-display-lg {
+  font-family: var(--font-display);
+  font-size: var(--type-display-lg-size);
+  font-weight: var(--type-display-lg-weight);
+  line-height: var(--type-display-lg-lh);
+  letter-spacing: var(--type-display-lg-ls);
+}
+
+.type-display-md {
+  font-family: var(--font-body);
+  font-size: var(--type-display-md-size);
+  font-weight: var(--type-display-md-weight);
+  line-height: var(--type-display-md-lh);
+  letter-spacing: var(--type-display-md-ls);
+}
+
+.type-lead {
+  font-family: var(--font-display);
+  font-size: var(--type-lead-size);
+  font-weight: var(--type-lead-weight);
+  line-height: var(--type-lead-lh);
+  letter-spacing: var(--type-lead-ls);
+}
+
+.type-lead-airy {
+  font-family: var(--font-body);
+  font-size: var(--type-lead-airy-size);
+  font-weight: var(--type-lead-airy-weight);
+  line-height: var(--type-lead-airy-lh);
+  letter-spacing: var(--type-lead-airy-ls);
+}
+
+.type-tagline {
+  font-family: var(--font-display);
+  font-size: var(--type-tagline-size);
+  font-weight: var(--type-tagline-weight);
+  line-height: var(--type-tagline-lh);
+  letter-spacing: var(--type-tagline-ls);
+}
+
+.type-body-strong {
+  font-family: var(--font-body);
+  font-size: var(--type-body-strong-size);
+  font-weight: var(--type-body-strong-weight);
+  line-height: var(--type-body-strong-lh);
+  letter-spacing: var(--type-body-strong-ls);
+  font-feature-settings: "ss03";
+}
+
+.type-body {
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  font-weight: var(--type-body-weight);
+  line-height: var(--type-body-lh);
+  letter-spacing: var(--type-body-ls);
+}
+
+.type-caption-strong {
+  font-family: var(--font-body);
+  font-size: var(--type-caption-strong-size);
+  font-weight: var(--type-caption-strong-weight);
+  line-height: var(--type-caption-strong-lh);
+  letter-spacing: var(--type-caption-strong-ls);
+  font-feature-settings: "ss03";
+}
+
+.type-caption {
+  font-family: var(--font-body);
+  font-size: var(--type-caption-size);
+  font-weight: var(--type-caption-weight);
+  line-height: var(--type-caption-lh);
+  letter-spacing: var(--type-caption-ls);
+}
+
+.type-button-large {
+  font-family: var(--font-body);
+  font-size: var(--type-button-large-size);
+  font-weight: var(--type-button-large-weight);
+  line-height: var(--type-button-large-lh);
+  letter-spacing: var(--type-button-large-ls);
+}
+
+.type-button-utility {
+  font-family: var(--font-body);
+  font-size: var(--type-button-utility-size);
+  font-weight: var(--type-button-utility-weight);
+  line-height: var(--type-button-utility-lh);
+  letter-spacing: var(--type-button-utility-ls);
+}
+
+.type-fine-print {
+  font-family: var(--font-body);
+  font-size: var(--type-fine-print-size);
+  font-weight: var(--type-fine-print-weight);
+  line-height: var(--type-fine-print-lh);
+  letter-spacing: var(--type-fine-print-ls);
+}
+
+.type-nav-link {
+  font-family: var(--font-body);
+  font-size: var(--type-nav-link-size);
+  font-weight: var(--type-nav-link-weight);
+  line-height: var(--type-nav-link-lh);
+  letter-spacing: var(--type-nav-link-ls);
+}
+
+/* --------------------------------------------------------------------------
+   DOCUMENTED ATOMIC COMPONENTS (§Components)
+   -------------------------------------------------------------------------- */
+
+/* Button Primary */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  font-weight: var(--type-body-weight);
+  line-height: 1;
+  padding: 11px 22px;
+  border-radius: var(--radius-pill);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.12s cubic-bezier(0.25, 0.1, 0.25, 1);
+  user-select: none;
+}
+.btn-primary:active {
+  transform: scale(0.95);
+}
+.btn-primary:focus-visible {
+  outline: 2px solid var(--color-primary-focus);
+  outline-offset: 2px;
+}
+
+/* Button Secondary Pill */
+.btn-secondary-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  font-weight: var(--type-body-weight);
+  line-height: 1;
+  padding: 11px 22px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-primary);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.12s cubic-bezier(0.25, 0.1, 0.25, 1);
+  user-select: none;
+}
+.btn-secondary-pill:active {
+  transform: scale(0.95);
+}
+.btn-secondary-pill:focus-visible {
+  outline: 2px solid var(--color-primary-focus);
+  outline-offset: 2px;
+}
+
+/* Button Dark Utility */
+.btn-dark-utility {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-ink);
+  color: var(--color-on-dark);
+  font-family: var(--font-body);
+  font-size: var(--type-button-utility-size);
+  font-weight: var(--type-button-utility-weight);
+  line-height: var(--type-button-utility-lh);
+  letter-spacing: var(--type-button-utility-ls);
+  padding: 8px 15px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.12s cubic-bezier(0.25, 0.1, 0.25, 1);
+  user-select: none;
+}
+.btn-dark-utility:active {
+  transform: scale(0.95);
+}
+.btn-dark-utility:focus-visible {
+  outline: 2px solid var(--color-primary-focus);
+  outline-offset: 2px;
+}
+
+/* Button Pearl Capsule (Status pills / Chips) */
+.btn-pearl-capsule {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  background-color: var(--color-surface-pearl);
+  color: var(--color-ink-muted-80);
+  font-family: var(--font-body);
+  font-size: var(--type-caption-size);
+  font-weight: var(--type-caption-weight);
+  line-height: var(--type-caption-lh);
+  letter-spacing: var(--type-caption-ls);
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-hairline);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.12s cubic-bezier(0.25, 0.1, 0.25, 1);
+  user-select: none;
+}
+.btn-pearl-capsule:active {
+  transform: scale(0.95);
+}
+.btn-pearl-capsule.active {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Button Icon Circular */
+.btn-icon-circular {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-chip-translucent);
+  color: var(--color-ink);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.12s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.btn-icon-circular:active {
+  transform: scale(0.95);
+}
+
+/* Store Utility Card */
+.store-utility-card {
+  background-color: var(--color-canvas);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: none; /* STRICT: No shadows on utility cards per DESIGN-apple.md */
+}
+
+/* Search Input / Form Input */
+.apple-input {
+  display: block;
+  width: 100%;
+  height: 44px;
+  background-color: var(--color-canvas);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--space-sm);
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  font-weight: var(--type-body-weight);
+  color: var(--color-ink);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.apple-input:focus {
+  outline: 2px solid var(--color-primary-focus);
+  outline-offset: 1px;
+}
+.apple-input::placeholder {
+  color: var(--color-ink-muted-48);
+}
+.apple-input.error {
+  border-color: var(--color-primary);
+}
+
+/* --------------------------------------------------------------------------
+   LAYOUT CHROME (§Components)
+   -------------------------------------------------------------------------- */
+/* Global Nav (44px, surface-black) */
+.global-nav {
+  height: 44px;
+  background-color: var(--color-surface-black);
+  color: var(--color-body-on-dark);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-lg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.global-nav a {
+  color: var(--color-body-muted);
+  font-family: var(--font-body);
+  font-size: var(--type-nav-link-size);
+  line-height: var(--type-nav-link-lh);
+  letter-spacing: var(--type-nav-link-ls);
+  text-decoration: none;
+  padding: 0 var(--space-sm);
+  transition: color 0.15s ease;
+}
+.global-nav a:hover,
+.global-nav a.active {
+  color: var(--color-body-on-dark);
+}
+
+/* Sub Nav Frosted (52px, canvas-parchment 80% + blur) */
+.sub-nav-frosted {
+  height: 52px;
+  background-color: rgba(245, 245, 247, 0.8);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-lg);
+  position: sticky;
+  top: 44px;
+  z-index: 99;
+}
+
+/* --------------------------------------------------------------------------
+   DERIVED DATA TABLE (Strict minimal derivation from store-utility-card)
+   -------------------------------------------------------------------------- */
+.apple-table-container {
+  background-color: var(--color-canvas);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.apple-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.apple-table th {
+  background-color: var(--color-surface-pearl);
+  color: var(--color-ink-muted-48);
+  font-family: var(--font-body);
+  font-size: var(--type-caption-strong-size);
+  font-weight: var(--type-caption-strong-weight);
+  line-height: var(--type-caption-strong-lh);
+  letter-spacing: var(--type-caption-strong-ls);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-hairline);
+  font-feature-settings: "ss03";
+}
+
+.apple-table td {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-divider-soft);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--color-ink);
+}
+
+.apple-table tr:last-child td {
+  border-bottom: none;
+}
+
+.apple-table tr:hover td {
+  background-color: var(--color-canvas-parchment);
+}
+
+/* --------------------------------------------------------------------------
+   SIMULATION BADGES (Strict Requirement: Clearly distinguish simulations)
+   -------------------------------------------------------------------------- */
+.badge-simulated {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: var(--type-fine-print-size);
+  font-weight: 600;
+  background-color: var(--color-surface-tile-1);
+  color: var(--color-body-on-dark);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE BEHAVIOR (8 breakpoints)
+   -------------------------------------------------------------------------- */
+@media (max-width: 419px) {
+  .type-hero-display { font-size: 28px; }
+}
+@media (min-width: 420px) and (max-width: 640px) {
+  .type-hero-display { font-size: 34px; }
+}
+@media (max-width: 735px) {
+  .hide-on-mobile { display: none !important; }
+}
+@media (max-width: 833px) {
+  .sidebar-collapsible { display: none; }
+}

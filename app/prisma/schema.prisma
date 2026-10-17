@@ -1,0 +1,397 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// -----------------------------------------------------------------------------
+// 1. TENANCY & GOVERNANCE
+// -----------------------------------------------------------------------------
+
+model Client {
+  id                  String               @id @default(cuid())
+  name                String
+  domain              String               @unique
+  currency            String               @default("INR")
+  users               User[]
+  teams               Team[]
+  leads               Lead[]
+  leadActivities      LeadActivity[]
+  projects            Project[]
+  towers              Tower[]
+  projectUnits        ProjectUnit[]
+  bookings            Booking[]
+  callLogs            CallLog[]
+  siteVisits          SiteVisit[]
+  followups           Followup[]
+  tasks               Task[]
+  campaigns           Campaign[]
+  auditLogs           AuditLog[]
+  passwordResetTokens PasswordResetToken[]
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+}
+
+model User {
+  id                  String               @id @default(cuid())
+  clientId            String
+  client              Client               @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  email               String
+  passwordHash        String
+  firstName           String
+  lastName            String
+  role                UserRole             @default(PRE_SALES)
+  teamId              String?
+  team                Team?                @relation(fields: [teamId], references: [id])
+  tokenVersion        Int                  @default(1)
+  failedAttempts      Int                  @default(0)
+  lockedUntil         DateTime?
+  status              UserStatus           @default(ACTIVE)
+  assignedLeads       Lead[]               @relation("AssignedLeads")
+  leadActivities      LeadActivity[]
+  callLogs            CallLog[]
+  followups           Followup[]
+  tasks               Task[]
+  auditLogs           AuditLog[]
+  passwordResetTokens PasswordResetToken[]
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+
+  @@unique([clientId, email])
+  @@index([clientId])
+  @@index([clientId, role])
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  MANAGER
+  PRE_SALES
+  SALES
+  POST_SALES
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+model Team {
+  id          String   @id @default(cuid())
+  clientId    String
+  client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  name        String
+  department  String   // e.g. "Pre-Sales", "Sales", "Post-Sales"
+  managerId   String?
+  users       User[]
+  leads       Lead[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([clientId])
+}
+
+// -----------------------------------------------------------------------------
+// 2. AUDIT & SECURITY RECOVERY
+// -----------------------------------------------------------------------------
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  clientId   String
+  client     Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id])
+  action     String   // e.g. "AUTH_LOGIN", "LEAD_STAGE_TRANSITION", "LEAD_REASSIGN"
+  entityType String   // e.g. "User", "Lead", "Booking"
+  entityId   String
+  metadata   Json?    // Context diff or action payload
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+
+  @@index([clientId, entityType, entityId])
+  @@index([clientId, createdAt])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  tokenHash String    @unique
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clientId  String
+  client    Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([clientId, userId])
+}
+
+// -----------------------------------------------------------------------------
+// 3. LEAD 360 & PIPELINE
+// -----------------------------------------------------------------------------
+
+enum LeadStage {
+  INCOMING
+  PROSPECT
+  OPPORTUNITY
+  BOOKED
+  UNQUALIFIED
+  LOST
+}
+
+model Lead {
+  id                 String         @id @default(cuid())
+  clientId           String
+  client             Client         @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  crmId              String         // Formatted human-readable Sell.do CRM ID e.g. "LD-10023"
+  firstName          String
+  lastName           String
+  email              String?
+  phone              String
+  stage              LeadStage      @default(INCOMING)
+  subStage           String?
+  assignedUserId     String?
+  assignedUser       User?          @relation("AssignedLeads", fields: [assignedUserId], references: [id])
+  teamId             String?
+  team               Team?          @relation(fields: [teamId], references: [id])
+  source             String?        // e.g. "Google Ads", "Direct Walk-in"
+  subSource          String?
+  campaignId         String?
+  campaign           Campaign?      @relation(fields: [campaignId], references: [id])
+  projectId          String?
+  project            Project?       @relation(fields: [projectId], references: [id])
+  budgetMin          Float?
+  budgetMax          Float?
+  propertyType       String?        // e.g. "2 BHK", "3 BHK", "Villa"
+  lostReason         String?
+  unqualifiedReason  String?
+  customFields       Json?          // Dynamic JSONB attributes per Sell.do 94-field schema
+  activities         LeadActivity[]
+  callLogs           CallLog[]
+  siteVisits         SiteVisit[]
+  followups          Followup[]
+  tasks              Task[]
+  bookings           Booking[]
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  @@unique([clientId, crmId])
+  @@index([clientId, stage])
+  @@index([clientId, assignedUserId])
+  @@index([clientId, phone])
+}
+
+model LeadActivity {
+  id          String   @id @default(cuid())
+  clientId    String
+  client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  leadId      String
+  lead        Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  type        String   // "CALL", "SITE_VISIT", "NOTE", "STAGE_CHANGE", "REASSIGN", "WHATSAPP", "TASK"
+  title       String
+  description String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+
+  @@index([clientId, leadId, createdAt])
+}
+
+// -----------------------------------------------------------------------------
+// 4. INVENTORY & BOOKINGS (POST-SALES)
+// -----------------------------------------------------------------------------
+
+model Project {
+  id           String        @id @default(cuid())
+  clientId     String
+  client       Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  name         String
+  code         String
+  reraId       String?
+  location     String
+  status       String        @default("Active")
+  towers       Tower[]
+  units        ProjectUnit[]
+  leads        Lead[]
+  siteVisits   SiteVisit[]
+  bookings     Booking[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@unique([clientId, code])
+  @@index([clientId])
+}
+
+model Tower {
+  id          String        @id @default(cuid())
+  clientId    String
+  client      Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  projectId   String
+  project     Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  name        String
+  floorsCount Int           @default(1)
+  units       ProjectUnit[]
+
+  @@index([clientId, projectId])
+}
+
+enum UnitStatus {
+  AVAILABLE
+  BLOCKED
+  BOOKED
+}
+
+model ProjectUnit {
+  id               String      @id @default(cuid())
+  clientId         String
+  client           Client      @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  projectId        String
+  project          Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  towerId          String
+  tower            Tower       @relation(fields: [towerId], references: [id], onDelete: Cascade)
+  unitNumber       String
+  floor            Int
+  configuration    String      // "2 BHK", "3 BHK", etc.
+  superBuiltUpArea Float
+  carpetArea       Float
+  basePrice        Float
+  status           UnitStatus  @default(AVAILABLE)
+  bookings         Booking[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  @@unique([clientId, projectId, unitNumber])
+  @@index([clientId, status])
+}
+
+enum BookingStatus {
+  TENTATIVE
+  CONFIRMED
+  CANCELLED
+}
+
+model Booking {
+  id                 String        @id @default(cuid())
+  clientId           String
+  client             Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  bookingId          String        // Formatted Sell.do ID e.g. "BK-8004"
+  leadId             String
+  lead               Lead          @relation(fields: [leadId], references: [id])
+  projectId          String
+  project            Project       @relation(fields: [projectId], references: [id])
+  unitId             String
+  unit               ProjectUnit   @relation(fields: [unitId], references: [id])
+  applicantName      String
+  agreementValue     Float
+  bookingAmount      Float
+  status             BookingStatus @default(TENTATIVE)
+  cancellationReason String?
+  metadata           Json?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  @@unique([clientId, bookingId])
+  @@index([clientId, status])
+}
+
+// -----------------------------------------------------------------------------
+// 5. COMMUNICATIONS & TASKS
+// -----------------------------------------------------------------------------
+
+model CallLog {
+  id              String   @id @default(cuid())
+  clientId        String
+  client          Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  leadId          String
+  lead            Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  userId          String?
+  user            User?    @relation(fields: [userId], references: [id])
+  direction       String   // "INBOUND", "OUTBOUND"
+  status          String   // "ANSWERED", "MISSED", "BUSY"
+  durationSeconds Int      @default(0)
+  recordingUrl    String?
+  aiTranscript    String?  @db.Text
+  aiSentiment     String?  // "POSITIVE", "NEUTRAL", "NEGATIVE"
+  aiKeyPoints     Json?    // Array of key takeaways
+  createdAt       DateTime @default(now())
+
+  @@index([clientId, leadId])
+}
+
+model SiteVisit {
+  id                 String   @id @default(cuid())
+  clientId           String
+  client             Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  leadId             String
+  lead               Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  projectId          String
+  project            Project  @relation(fields: [projectId], references: [id])
+  scheduledStartTime DateTime
+  scheduledEndTime   DateTime
+  conductedAt        DateTime?
+  status             String   @default("SCHEDULED") // "SCHEDULED", "CONDUCTED", "CANCELLED", "RESCHEDULED"
+  feedbackRating     Int?     // 1 to 5
+  feedbackNotes      String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([clientId, leadId])
+  @@index([clientId, status])
+}
+
+model Followup {
+  id          String   @id @default(cuid())
+  clientId    String
+  client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  leadId      String
+  lead        Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  scheduledAt DateTime
+  status      String   @default("PENDING") // "PENDING", "COMPLETED", "OVERDUE"
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([clientId, userId, status])
+}
+
+model Task {
+  id          String   @id @default(cuid())
+  clientId    String
+  client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  leadId      String?
+  lead        Lead?    @relation(fields: [leadId], references: [id])
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  title       String
+  description String?
+  dueDate     DateTime
+  priority    String   @default("MEDIUM") // "LOW", "MEDIUM", "HIGH"
+  status      String   @default("OPEN")   // "OPEN", "COMPLETED", "ARCHIVED"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([clientId, userId, status])
+}
+
+model Campaign {
+  id          String   @id @default(cuid())
+  clientId    String
+  client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  name        String
+  source      String   // "Google Ads", "Meta Ads", etc.
+  budget      Float    @default(0)
+  spend       Float    @default(0)
+  leadsCount  Int      @default(0)
+  status      String   @default("Active")
+  leads       Lead[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([clientId])
+}

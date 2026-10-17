@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Next.js Build Output
+.next/
+**/.next/
+out/
+build/
+
+# Local Database & Logs
+.pgdata/
+**/.pgdata/
+*.log
+**/*.log
+
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+!app/.env.example
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+*.tsbuildinfo
